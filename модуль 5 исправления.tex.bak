@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+%this is for cyrillic text
+\usepackage[main=russian,english]{babel}
+%this is needed for changing font
+\usepackage{fontspec}
+\usepackage[a4paper, top=1cm]{geometry}
+%without this double integral \iint doesnt work
+\usepackage{mathtools}
+\usepackage{physics}
+%Чтобы LaTeX-овские лигатуры работали, типа тире, кавычек и прочего
+\newfontfamily\cyrillicfont[Mapping=tex-text]{Times New Roman}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+%this font has cyrillic letters
+\setmainfont{Times New Roman}
+\renewcommand{\labelenumi}{\Roman{enumi}}
+\begin{document} 
+\begin{center}
+\begin{Large}
+\textbf{Типовой расчет модуль 6 (Ряды). Вариант 6} \\
+\end{Large}
+\end{center}
+\stepcounter{section}
+\Roman{section}.
+ Исследуйте сходимость числовых рядов: a) Выясните, сходится или расходится положительный ряд; б) выясните сходится или расходится знакопеременный ряд; если ряд сходится, установите характер сходимости. \\
+ 
+ a) $\sum_{n=1}^{\infty} \frac{n^n}{2^nn!}$
+\[\lim\limits_{n \to \infty} \frac{(n+1)^{n+1}}{2^{n+1}(n+1)!}\cdot \frac{2^n!}{n^n} = \frac{1}{2}\lim\limits_{n \to \infty} \frac{(n+1)^n(n+1)n!}{n!(n+1)n^n} = \frac{1}{2}\lim\limits_{n \to \infty}\frac{(n+1)^n}{n^n} = \frac{1}{2}\lim\limits_{n \to \infty}\Big(\frac{n+1}{n}\Big)^n =  \]
+\[= \frac{1}{2}\lim\limits_{n \to \infty}\Big(1+ \frac{1}{n} \Big)^n = \frac{1}{2}\cdot e = \frac{e}{2} > 1\]
+По признаку Даламбера ряд расходится.\\
+
+ б) $\sum_{n=1}^{\infty} (-1)^nsin(\frac{e}{\pi})^n $
+ 
+Данный ряд не является знакочередующимся, но если умножить его на (-1), то получим знакочередующийся ряд 
+\begin{equation}
+\sum_{n = 1}^\infty (-1)^{n + 1} sin (\frac{e}{\pi})^n
+\end{equation}
+Исходный ряд и ряд \eqref{eq1} сходятся или расходятся одновременнон согласно \textit{свойству 1} рядов, поэтому мы можем далее исследовать ряд \eqref{eq1}.
+Последовательность абсолютных величин членов ряда $sin(\frac{e}{\pi})^n$ монотонно убывает, а общий член ряда стремится к нулю:
+\[\lim\limits_{n \to \infty} (-1)^{n+1} sin(\frac{e}{\pi})^n = 0 \]
+(предел произведения равен произведению пределов, предел правой части равен нулю, предел левой неопределен но ограничен сверху 1 и -1 снизу, т.о. произведение 0 и ограниченного числа есть 0).
+
+По признаку Лейбница ряд сходится.
+
+Чтобы установить характер сходимости, определим сходится или расходится ряд \\
+\begin{equation}
+\sum_{n=1}^\infty sin(\frac{e}{\pi})^n,
+\end{equation} составленный из модулей членов данного ряда.
+Воспользуемся для этого предельным признаком сравнения знакоположительных рядов.
+Рассмотрим ряд 
+\begin{equation}
+\sum_{n=1}^\infty (\frac{e}{\pi})^n
+\end{equation}
+Ряд \eqref{eq3} есть ряд, полученный из сходящегося ряда геометрической прогрессии ($a + aq + aq^2 + \cdots + aq^{n-1} + \cdots (a = 1, q = \frac{e}{\pi} < 1)$) путём отбрасывания первого члена. По \textit{свойству 3} рядов сходится и ряд \eqref{eq3}.
+\end{document}
+
