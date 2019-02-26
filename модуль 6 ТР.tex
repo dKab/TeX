@@ -22,14 +22,16 @@
 \end{center}
 \stepcounter{section}
 \Roman{section}.
- Исследуйте сходимость числовых рядов: a) Выясните, сходится или расходится положительный ряд; б) выясните сходится или расходится знакопеременный ряд; если ряд сходится, установите характер сходимости. \\
- 
- a) $\sum_{n=1}^{\infty} \frac{n^n}{2^nn!}$
+ Исследуйте сходимость числовых рядов: a) Выясните, сходится или расходится положительный ряд; б) выясните сходится или расходится знакопеременный ряд; если ряд сходится, установите характер сходимости.
+\begin{flalign*}
+&\text{a)}\sum_{n=1}^{\infty} \frac{n^n}{2^nn!}&
+\end{flalign*}
 \[\lim\limits_{n \to \infty} \frac{(n+1)^{n+1}}{2^{n+1}(n+1)!}\cdot \frac{2^n!}{n^n} = \frac{1}{2}\lim\limits_{n \to \infty} \frac{(n+1)^n(n+1)n!}{n!(n+1)n^n} = \frac{1}{2}\lim\limits_{n \to \infty}\frac{(n+1)^n}{n^n} = \frac{1}{2}\lim\limits_{n \to \infty}\Big(\frac{n+1}{n}\Big)^n =  \]
 \[= \frac{1}{2}\lim\limits_{n \to \infty}\Big(1+ \frac{1}{n} \Big)^n = \frac{1}{2}\cdot e = \frac{e}{2} > 1\]
-По признаку Даламбера ряд расходится.\\
-
- б) $\sum_{n=1}^{\infty} (-1)^nsin(\frac{e}{\pi})^n $
+По признаку Даламбера ряд расходится.
+\begin{flalign*}
+&\text{б)}\sum_{n=1}^{\infty} (-1)^nsin(\frac{e}{\pi})^n&
+\end{flalign*}
  
 Данный ряд не является знакочередующимся, но если умножить его на (-1), то получим знакочередующийся ряд 
 \begin{equation}
@@ -59,5 +61,27 @@
 Обозначив $(\frac{e}{\pi})^n = x$, заметим что $x \rightarrow 0$ при $n \rightarrow \infty.$ Тогда 
 
 \[\lim\limits_{n \to \infty} \frac{sin(\frac{e}{\pi})^n}{(\frac{e}{\pi})^n} = \lim\limits_{x \to 0} \frac{sinx}{x} = 1 \,(\text{первый замечетельный предел}) \]
-Т.е. ряд \eqref{eq:2} сходится и, значит, исходный ряд сходится абсолютно.
+Т.е. ряд \eqref{eq:2} сходится и, значит, исходный ряд сходится абсолютно.\\
+\begin{center}
+{\large \textbf{Домашнее задание}}
+\end{center}
+Исследовать сходимость числовых рядов
+\begin{flalign*}
+&\text{a)} \sum_{n=1}^\infty\frac{3n^3+5}{n^3+6}&
+\end{flalign*}
+Это знакоположительный ряд.
+Рассмотрим ряд
+\[\sum_{n+1}^\infty \frac{3n^3+5}{n^3} \quad \text{(1)}\] 
+его общий член
+\[u_n = \frac{3n^3+5}{n^3} = \frac{3n^3}{n^3} + \frac{5}{n^3} = 3 + \frac{5}{n^3}\]
+Такой ряд удовлетворяет условию интегрального признака Коши
+т.к. $u_{n+1} < u_n$
+\[ \int_{1}^{+\infty} (3 + \frac{5}{n^3})dn = \lim\limits_{a \to \infty} \int_1^a (3+\frac{5}{n^3})dn = \eval{\lim\limits_{a \to \infty}(3n + \frac{5}{2n^2})}_1^a =  \]
+\[= \lim\limits_{a \to \infty}(3a + \frac{5}{2a^2} - 3 - \frac{5}{2}) = \infty \quad \text{- ряд расходится}\]
+\[\frac{3n^3 + 5}{n^3 + 6} : \frac{3n^3+5}{n^3} = \frac{3n^3+5}{n^3+6} \cdot \frac{n^3}{3n^3+5} = \frac{n^3}{n^3 + 6}\]
+\[\lim\limits_{n \to \infty} \frac{n^3}{n^3+6} = \lim\limits_{n \to \infty}\frac{3n^2}{3n^2} = 1\]
+Значит исходный ряд расходится, как и ряд (1) по предельному признаку сравнения. \\
+\begin{flalign*}
+&\text{b)}\sum_{n=5}^\infty \frac{2\cdot 5 \cdot \text{...} \cdot (3n-1)}{4^{n+2}(n-5)!}&
+\end{flalign*}
 \end{document}

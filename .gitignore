@@ -1,0 +1,10 @@
+*.gz
+*.aux
+*.log
+*.pygtex
+*.pygstyle
+*.fls
+*.fdb_latexmk
+*.bbl
+*.out
+*.blg
