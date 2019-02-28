@@ -93,6 +93,33 @@
 \[\lim\limits_{n \to \infty}\frac{3n+2}{4n-16} = \lim\limits_{n \to \infty} \frac{3}{4} = \frac{3}{4} < 1. \]
 То есть ряд сходится (при вычислении предела было применено правило Лопиталя).
 \begin{flalign*}
-&\sum_{n=1}^\infty \arccos \frac{4}{n^2+1 }&
+&\text{c)} \sum_{n=1}^\infty \arccos \frac{4}{n^2+1 }&
 \end{flalign*}
+\[u_n = \arccos \frac{4}{n^2+1 } = 2\arcsin\sqrt{\frac{1-\frac{4}{n^2+1}}{2}}\]
+\[(\arccos x = 2 \arcsin \sqrt{\frac{1-x}{2}})\]
+\[\lim\limits_{n \to \infty} u_n = \lim \limits_{n \to \infty} 2 \arcsin \sqrt{\frac{1-\frac{4}{n^2+1}}{2}} = 2 \arcsin \sqrt{\frac{1}{2}} = 2 \arcsin \frac{\sqrt{2}}{2} = 2 \cdot \frac{\pi}{4} = \frac{\pi}{2} \neq 0. \]
+т.о. ряд расходится т.к. не выполнен необходимый признак сходимости.
+\begin{flalign*}
+&\text{d)} \sum_{n=3}^\infty\frac{(-1)^n}{(n-1)\ln(n-1)} &
+\end{flalign*}
+\[u_n = \frac{(-1)^n}{(n-1)\ln(n-1)}.\]
+Рассмотрим ряд 
+\[\sum_{n=3}^\infty \frac{(-1)^{n+1}}{(n-1)\ln (n-1)} \]
+с общим членом
+\[v_n = \frac{1}{(n-1)\ln (n-1)}.\] Данный ряд получается путём умножения исходного ряда на -1 и является знакочередующимся.
+\[\lim\limits_{n \to \infty} v_n = \lim\limits_{n \to \infty} \frac{1}{(n-1)\ln (n-1)} = 0\]
+Заметим также что $v_n > v_{n+1}$ поэтому ряд сходится по признаку Лейбница, а значит, по \textit{свойству 1} рядов, сходится и исходный ряд.\\ Определим характер сходимости.\\
+Рассмотрим ряд
+\setcounter{equation}{0}
+\begin{equation}
+\sum_{n=3}^\infty = \frac{1}{(n-1)\ln (n-1)} \label{eq:4}
+\end{equation}
+Такой ряд удовлетворяет условиям интегрального признака Коши. Применим его:
+\[\int_3^{+\infty}\frac{dx}{(x-1)\ln (x-1)} = 
+\begin{bmatrix}
+t = x - 1; \\
+dt = dx
+\end{bmatrix}
+= \int_2^{+\infty} \frac{dt}{t\ln t} = \int_2^{+\infty} \frac{d(\ln t)}{\ln t} = \eval{\ln |\ln t|}_2^\infty = \infty. \]
+Т.е. несобственный интеграл расходится, стало быть расходится и ряд \eqref{eq:4}, состоящий из модулей членов исходного ряда. Т.о. исходный ряд сходится условно.
 \end{document}
