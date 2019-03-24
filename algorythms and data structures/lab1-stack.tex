@@ -1,0 +1,192 @@
+\documentclass[12pt]{article}
+\usepackage[english, russian]{babel}
+%\usepackage{makecell}
+%\usepackage{multirow}
+%\usepackage{hhline}
+\usepackage{ulem}
+\usepackage{minted}
+\usepackage[TS1, T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+%\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+%\makeatother
+\usepackage[left=2cm,right=2cm, top=1cm,bottom=1.5cm,bindingoffset=0cm]{geometry}
+
+%\usepackage{multicol}
+%\usepackage{dirtree} 
+%\usepackage{graphicx}
+%\graphicspath{{imgs/}}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\begin{document}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\begin{center}
+\normalsize
+\textbf{Федеральное государственное автономное образовательное учреждение высшего образования}
+
+\small
+\medskip 
+\textbf{САНКТ-ПЕТЕРБУРГСКИЙ НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ  УНИВЕРСИТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ, МЕХАНИКИ И ОПТИКИ}
+
+\medskip 
+\textbf{ФАКУЛЬТЕТ ПРОГРАММНОЙ ИНЖЕНЕРИИ И КОМПЬЮТЕРНОЙ ТЕХНИКИ}
+\end{center}
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+\begin{center}
+\par\medskip\par\smallskip
+\Large
+ 
+\par\smallskip
+\textbf{ОТЧЕТ} 
+
+\textbf{ПО ЛАБОРАТОРНОЙ РАБОТЕ №1}
+
+\large
+\par\bigskip
+\textbf{«Алгоритмы и структуры данных: \\ Полустатические структуры данных. Стек.»}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\end{center}
+\begin{center}
+\begin{tabular}{lllll}
+Проверил:	 	 						& \hspace{80pt}	&	Выполнил:										&\\
+Сентерев Ю.А.	 \_\_\_\_\_\_\_\_\_\_	&			    &	Студент группы P3255							&\\
+«\_\_\_\_\_\_» 	 \_\_\_\_\_\_\_ 201\_г.  & 				&	Кабардинов Д. В. \_\_\_\_\_\_\_\_\_\_\_			&\\
+										&				&													&\\
+Оценка\hspace{12pt}\_\_\_\_\_\_\_\_\_	&				&													&\\
+\end{tabular}
+\par\bigskip\par\bigskip\par\bigskip
+                                                  
+\par\bigskip \par\bigskip
+\end{center}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\begin{center}
+Санкт-Петербург
+\par\bigskip
+2019
+\end{center}
+\pagebreak
+\textbf{ Цель работы:}
+\begin{list}{-}{}
+\item исследовать и изучить полустатические структуры данных (на примере стеков,
+реализованных с помощью массивов);
+\item овладеть навыками разработки алгоритмов и написания программ по исследованию
+стеков на языке программирования Python;
+\end{list}
+
+\textbf{Задание} \\
+
+Ввести символы, формируя из них стек.\\
+
+5. Вставить символ ‘*’ в середину стека, если число элементов четное, или после среднего
+элемента, если число элементов нечетное.\\
+\par
+\textbf{Ход выполнения работы}\\
+
+Реализация стека:
+\begin{minted}{python}
+class Stack: 
+	def __init__(self):
+		self.stack = []
+
+	def push(self, elem):
+		self.stack.append(elem)
+
+	def pop(self):
+		if len(self.stack) == 0:
+			return None
+		else:
+			return self.stack.pop()
+
+	def empty(self):
+		return len(self.stack) == 0
+
+	def stackTop(self):
+		if self.empty():
+			return None
+		else:
+			return self.stack[len(self.stack) - 1]
+\end{minted}
+
+Создание стека и добавление в него элементов:
+\begin{minted}{python}
+charactersStack = Stack()
+
+for i in range(4):
+	charactersStack.push(i)
+
+# The stack has even number of elements now.
+\end{minted}
+\pagebreak
+Функция, добавляющая элемент в середину стека:
+\begin{minted}{python}
+# works only for stacks with length > 1
+def insertInTheMiddle(stack, elementToInsert):
+	helperStack = Stack()
+	size = 0
+	while stack.empty() == False:
+		helperStack.push(stack.pop())
+		size += 1
+
+	if (size % 2) == 0:
+		#size is even
+		position = size / 2
+	else:
+		#size is odd
+		position = (size // 2) + 1
+
+	for i in range(size + 1):
+		if i == position:
+			stack.push(elementToInsert)
+		else:
+			stack.push(helperStack.pop())
+	
+	return stack
+\end{minted}
+Проверка результатов выполнения программы:
+\begin{minted}{python}
+insertInTheMiddle(charactersStack, '*')
+# Checking the result:
+while charactersStack.empty() == False:
+	print(charactersStack.pop())
+#expected result:	 3
+# 			2
+# 			*
+# 			1
+# 			0
+#test the function on odd sized stack:
+charactersStack2 = Stack()
+for i in range(5):
+	charactersStack2.push(i)
+
+insertInTheMiddle(charactersStack2, '*')
+
+while charactersStack2.empty() == False:
+	print(charactersStack2.pop())
+#expected result	  4
+#			 3
+# 			*
+# 			2
+# 			1
+# 			0
+\end{minted}
+\pagebreak
+\textbf{Выводы}
+
+В ходе выполнения работы мной была реализована структура данных Стек, а также функция добавляющая элемент в середину стека. Т.о. работа выполнена в полном объёме в соответствии с заданием. В результате получены навыки программирования на языке Python и изучена широко применяемая на практике структура данных - Стек.
+\par\bigskip
+\textbf{Список используемой литературы}:
+\begin{enumerate}
+
+
+\item \url{https://www.pythoncentral.io/the-difference-between-a-list-and-an-array/} \\ - Python Central: Python Programming Guides and Tutorials
+
+\item \url{https://docs.python.org/3.5/tutorial/index.html} - The Python Tutorial
+\item Стивен Скиена - Алгоритмы. Руководство по разработке
+\item Никлаус Вирт - Алгоритмы и структуры данных
+\item Томас Кормен - Алгоритмы. Построение и анализ
+\item \url{https://www.cs.cmu.edu/~adamchik/15-121/lectures/Stacks%20and%20Queues/Stacks%20and%20Queues.html} Carnegie Mellon University Web Site - Stacks and Queues
+\end{enumerate}
+\end{document}
+

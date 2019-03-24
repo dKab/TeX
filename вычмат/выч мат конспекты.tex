@@ -2,18 +2,20 @@
 %this is for cyrillic text
 \usepackage[main=russian,english]{babel}
 %this is needed for changing font
-\usepackage{fontspec}
+%\usepackage{fontspec}
 \usepackage[a4paper, top=1cm]{geometry}
 %without this double integral \iint doesnt work
 \usepackage{mathtools}
 \usepackage{physics}
+\usepackage{tempora}
 %Чтобы LaTeX-овские лигатуры работали, типа тире, кавычек и прочего
-\newfontfamily\cyrillicfont[Mapping=tex-text]{Times New Roman}
+%\newfontfamily\cyrillicfont[Mapping=tex-text]{Times New Roman}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.8}
 %this font has cyrillic letters
-\setmainfont{Times New Roman}
-\setlength{\parindent}{0pt}
+%\setmainfont{Times New Roman} - linux doesn't have this font
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
 \renewcommand{\labelenumi}{\Roman{enumi}}
 \begin{document} 
 \begin{center}
