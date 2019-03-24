@@ -1,0 +1,189 @@
+\documentclass[12pt]{article}
+\usepackage[english, russian]{babel}
+%\usepackage{makecell}
+%\usepackage{multirow}
+%\usepackage{hhline}
+\usepackage{ulem}
+\usepackage{minted}
+\usepackage[TS1, T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+%\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+%\makeatother
+\usepackage[left=2cm,right=2cm, top=1cm,bottom=1.5cm,bindingoffset=0cm]{geometry}
+
+%\usepackage{multicol}
+%\usepackage{dirtree} 
+%\usepackage{graphicx}
+%\graphicspath{{imgs/}}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\begin{document}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\begin{center}
+\normalsize
+\textbf{Федеральное государственное автономное образовательное учреждение высшего образования}
+
+\small
+\medskip 
+\textbf{САНКТ-ПЕТЕРБУРГСКИЙ НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ  УНИВЕРСИТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ, МЕХАНИКИ И ОПТИКИ}
+
+\medskip 
+\textbf{ФАКУЛЬТЕТ ПРОГРАММНОЙ ИНЖЕНЕРИИ И КОМПЬЮТЕРНОЙ ТЕХНИКИ}
+\end{center}
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+\begin{center}
+\par\medskip\par\smallskip
+\Large
+ 
+\par\smallskip
+\textbf{ОТЧЕТ} 
+
+\textbf{ПО ЛАБОРАТОРНОЙ РАБОТЕ №2}
+
+\large
+\par\bigskip
+\textbf{«Алгоритмы и структуры данных: \\ Списковые структуры данных.»}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\end{center}
+\begin{center}
+\begin{tabular}{lllll}
+Проверил:	 	 						& \hspace{80pt}	&	Выполнил:										&\\
+Сентерев Ю.А.	 \_\_\_\_\_\_\_\_\_\_	&			    &	Студент группы P3255							&\\
+«\_\_\_\_\_\_» 	 \_\_\_\_\_\_\_ 201\_г.  & 				&	Кабардинов Д. В. \_\_\_\_\_\_\_\_\_\_\_			&\\
+										&				&													&\\
+Оценка\hspace{12pt}\_\_\_\_\_\_\_\_\_	&				&													&\\
+\end{tabular}
+\par\bigskip\par\bigskip\par\bigskip
+                                                  
+\par\bigskip \par\bigskip
+\end{center}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\begin{center}
+Санкт-Петербург
+\par\bigskip
+2019
+\end{center}
+\pagebreak
+\textbf{ Цель работы:}
+\begin{list}{-}{}
+\item исследовать и изучить списковые структуры данных и их основные процедуры;
+\item овладеть умениями и навыками написания программ по исследованию списковых структур
+данных и их основных процедур на языке программирования Python;
+\end{list}
+
+\textbf{Задание} \\
+
+5. Удалить n-ый элемент из списка.\\
+15. Задача Джозефуса: n воинов из одного войска убивают каждого m-го из другого.
+Требуется определить номер k начальной позиции воина, который должен будет остаться
+последним. \\
+\par
+\textbf{Ход выполнения работы}\\
+
+Реализация односвязного списка:
+\begin{minted}{python}
+class SingleLinkedList:
+	def __init__(self):
+		self.lst = None
+	# Inserts node with info propery = value to the beginning of the list
+	def unshift(self, value):
+		node = ListNode(value)
+		if self.lst != None:
+			node.setPointerTo(self.lst)
+		self.lst = node
+	# Removes first node of the list
+	# Returns removed node's 'info' property
+	def shift(self):
+		if self.lst == None:
+			return None
+		else:
+			data = self.lst.info
+			self.lst = self.lst.ptr
+			return data 
+
+	# Inserts node which info property is set to "value" param
+	# after the node to which pointer p refers
+	def insertAfter(self, p, value):
+		node = ListNode(value)
+		node.setPointerTo(p.ptr)
+		p.setPointerTo(node)
+	# Removes list node to which pointer of p node refers
+	# Returns removed node's 'info' property
+	def removeAfter(self, p):
+		if p.ptr == None:
+			return None
+		else:
+			node = p.ptr
+			p.setPointerTo(node.ptr)
+			return node.info
+			
+class ListNode:
+	ptr = None
+
+	def __init__(self, info):
+		self.info = info
+	
+	def setPointerTo(self, node):
+		self.ptr = node
+\end{minted}
+
+Функция, решающая задачу:
+\begin{minted}{python}
+# Removes n-th element from the list
+# n is 1 based. So if it was an array, n = 1 would mean that
+# elemenent at index 0 would be deleted.
+# Returns info property of removed node
+def removeNth(list, n):
+	#find a node before the one that we need to remove, i.e. n - 1
+	node = list.lst
+	if n > 1:
+		for i in range(n - 2):
+			node = node.ptr
+			if node == None:
+				return
+		return list.removeAfter(node)
+	else: # n == 1 - removing first element
+		return list.shift()
+\end{minted}
+
+Проверка правильности работы функции:
+\begin{minted}{python}
+# Testing:
+testList = SingleLinkedList()
+testList.unshift('d')
+testList.unshift('c')
+testList.unshift('b')
+testList.unshift('a')
+# list now have structure: abcd
+removeNth(testList, 2) # removing "b" letter
+#printing to check
+letter = testList.lst
+while letter.ptr != None:
+	print(letter.info)
+	letter = letter.ptr
+print(letter.info) 
+# expected result: acd
+\end{minted}
+
+\pagebreak
+\textbf{Выводы}
+
+В ходе выполнения работы мной была реализована структура данных Стек, а также функция добавляющая элемент в середину стека. Т.о. работа выполнена в полном объёме в соответствии с заданием. В результате получены навыки программирования на языке Python и изучена широко применяемая на практике структура данных - Стек.
+\par\bigskip
+\textbf{Список используемой литературы}:
+\begin{enumerate}
+
+
+\item \url{https://tinyurl.com/y3aj6pku} \\ - Linked Lists in Detail with Python Examples: Single Linked Lists
+
+\item \url{https://docs.python.org/3.5/tutorial/index.html} - The Python Tutorial
+\item Стивен Скиена - Алгоритмы. Руководство по разработке
+\item Никлаус Вирт - Алгоритмы и структуры данных
+\item Томас Кормен - Алгоритмы. Построение и анализ
+\item \url{https://www.pythoncentral.io/singly-linked-list-insert-node/} - Python Data Structures Tutorial
+\end{enumerate}
+\end{document}
+

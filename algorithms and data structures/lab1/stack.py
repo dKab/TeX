@@ -1,24 +1,24 @@
 class Stack: 
 	def __init__(self):
-		self.stack = []
+		self._stack = []
 
 	def push(self, elem):
-		self.stack.append(elem)
+		self._stack.append(elem)
 
 	def pop(self):
-		if len(self.stack) == 0:
+		if len(self._stack) == 0:
 			return None
 		else:
-			return self.stack.pop()
+			return self._stack.pop()
 
 	def empty(self):
-		return len(self.stack) == 0
+		return len(self._stack) == 0
 
 	def stackTop(self):
 		if self.empty():
 			return None
 		else:
-			return self.stack[len(self.stack) - 1]
+			return self._stack[len(self._stack) - 1]
 
 charactersStack = Stack()
 
