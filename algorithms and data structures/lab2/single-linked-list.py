@@ -1,3 +1,5 @@
+from ListNode import ListNode
+
 class SingleLinkedList:
 	def __init__(self):
 		self.lst = None
@@ -33,15 +35,6 @@ class SingleLinkedList:
 			node = p.ptr
 			p.setPointerTo(node.ptr)
 			return node.info
-
-class ListNode:
-	ptr = None
-
-	def __init__(self, info):
-		self.info = info
-	
-	def setPointerTo(self, node):
-		self.ptr = node
 
 # Removes n-th element from the list
 # n is 1 based. So if it was an array, n = 1 would mean that
