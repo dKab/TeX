@@ -1,0 +1,165 @@
+\documentclass[12pt]{article}
+\usepackage[english, russian]{babel}
+%\usepackage{makecell}
+%\usepackage{multirow}
+%\usepackage{hhline}
+\usepackage{ulem}
+\usepackage{minted}
+\usepackage[TS1, T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+%\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+%\makeatother
+\usepackage[left=2cm,right=2cm, top=1cm,bottom=1.5cm,bindingoffset=0cm]{geometry}
+
+%\usepackage{multicol}
+%\usepackage{dirtree} 
+%\usepackage{graphicx}
+%\graphicspath{{imgs/}}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\begin{document}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\begin{center}
+\normalsize
+\textbf{Федеральное государственное автономное образовательное учреждение высшего образования}
+
+\small
+\medskip 
+\textbf{САНКТ-ПЕТЕРБУРГСКИЙ НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ  УНИВЕРСИТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ, МЕХАНИКИ И ОПТИКИ}
+
+\medskip 
+\textbf{ФАКУЛЬТЕТ ПРОГРАММНОЙ ИНЖЕНЕРИИ И КОМПЬЮТЕРНОЙ ТЕХНИКИ}
+\end{center}
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+\begin{center}
+\par\medskip\par\smallskip
+\Large
+ 
+\par\smallskip
+\textbf{ОТЧЕТ} 
+
+\textbf{ПО ЛАБОРАТОРНОЙ РАБОТЕ №4}
+
+\large
+\par\bigskip
+\textbf{«Алгоритмы и структуры данных: \\ Алгоритмы сортировки.»}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\end{center}
+\begin{center}
+\begin{tabular}{lllll}
+Проверил:	 	 						& \hspace{80pt}	&	Выполнил:										&\\
+Сентерев Ю.А.	 \_\_\_\_\_\_\_\_\_\_	&			    &	Студент группы P3255							&\\
+«\_\_\_\_\_\_» 	 \_\_\_\_\_\_\_ 201\_г.  & 				&	Кабардинов Д. В. \_\_\_\_\_\_\_\_\_\_\_			&\\
+										&				&													&\\
+Оценка\hspace{12pt}\_\_\_\_\_\_\_\_\_	&				&													&\\
+\end{tabular}
+\par\bigskip\par\bigskip\par\bigskip
+                                                  
+\par\bigskip \par\bigskip
+\end{center}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\begin{center}
+Санкт-Петербург
+\par\bigskip
+2019
+\end{center}
+\pagebreak
+\textbf{Задание} \\
+
+С использованием любого из улучшенных методов сортировки решить задачу согласно
+своему варианту.
+5. Составить программу для быстрой перестройки данного массива А, в котором элементы
+расположены в порядке возрастания, так, чтобы после перестройки эти же элементы
+оказались расположенными в порядке убывания. \\
+\par
+\textbf{ Цель работы:}
+\begin{list}{-}{}
+\item исследовать и изучить улучшенные методы сортировки на примерах метода Шелла и
+быстрой сортировки;
+\item овладеть навыками написания программ с использованием улучшенных методов
+сортировки на языке программирования Python.
+\end{list}
+
+
+\par
+\textbf{Ход выполнения работы}\\
+1. Сортировка Шелла\\
+Идея метода заключается в сравнение разделенных на группы элементов последовательности, находящихся друг от друга на некотором расстоянии. Изначально это расстояние равно d или N/2, где N — общее число элементов. На первом шаге каждая группа включает в себя два элемента расположенных друг от друга на расстоянии N/2; они сравниваются между собой, и, в случае необходимости, меняются местами. На последующих шагах также происходят проверка и обмен, но расстояние d сокращается на d/2, и количество групп, соответственно, уменьшается. Постепенно расстояние между элементами уменьшается, и на d=1 проход по массиву происходит в последний раз.
+Реализация алгоритма сортировки Шелла на языке Python:
+\begin{minted}{python}
+def shellSort(array):
+	gapSizes = [7, 3, 1]
+	for gap in gapSizes:
+		for startPosition in range(gap):
+			gapInsertionSort(array, startPosition, gap)
+
+def gapInsertionSort(array, low, gap):
+	for i in range(low + gap, len(array), gap):
+		currentvalue = array[i]
+		position = i
+
+		while position >= gap and array[position - gap] < currentvalue:
+			array[position] = array[position - gap]
+			position = position - gap
+
+		array[position] = currentvalue
+
+sortedList = [1, 2, 5, 10, 15, 43, 55, 67, 87, 90, 99, 100]
+shellSort(sortedList)
+print(sortedList)
+\end{minted}
+
+Результат работы программы:
+\begin{minted}{bash}
+dmitrii@kdv:~/projects/TeX$ python3 algorithms\ and\ data\ structures/lab4/ShellSort.py 
+[100, 99, 90, 87, 67, 55, 43, 15, 10, 5, 2, 1]
+\end{minted}
+
+2. Быстрая сортировка \\
+
+В данном примере в списке $left$ собираются элементы, меньшие q, в списке $right$ — большие $q$, а в списке $middle$ — равные $q$. Разделение на три списка, а не на два используется для того, чтобы алгоритм не зацикливался, например, в случае, когда в списке остались только равные элементы. Барьерный элемент $q$ выбирается случайным образом из списка при помощи функции choice из модуля random.
+
+\begin{minted}{python}
+import random
+
+def quickSort(nums):
+    if len(nums) <= 1:
+        return nums
+    else:
+        q = random.choice(nums)
+        left = [elem for elem in nums if elem > q]
+
+        middle = [q] * nums.count(q)
+        right = [elem for elem in nums if elem < q]
+        return quickSort(left) + middle + quickSort(right)
+
+sorted = [1, 2, 4, 6, 7, 8, 10, 13, 46, 56, 68, 98]
+reversed = quickSort(sorted)
+print(reversed)
+\end{minted}
+Результат работы программы:
+\begin{minted}{bash}
+dmitrii@kdv:~/projects/TeX$ python3 algorithms\ and\ data\ structures/lab4/quickSort.py 
+[98, 68, 56, 46, 13, 10, 8, 7, 6, 4, 2, 1]
+\end{minted}
+
+\textbf{Выводы}\\
+Мне удалось выполнить поставленную задачу двумя 2 способами: \\
+1. Сортировка Шелла\\
+2. Быстрая сортировка \\
+Таким образом, цель работы достигнута.
+\par\bigskip
+\textbf{Список используемой литературы}:
+\begin{enumerate}
+\item \url{https://docs.python.org/3/tutorial/introduction.html#lists} \\ - Lists
+\item \url{https://docs.python.org/3.5/tutorial/index.html} - The Python Tutorial
+\item Стивен Скиена - Алгоритмы. Руководство по разработке
+\item Никлаус Вирт - Алгоритмы и структуры данных
+\item Томас Кормен - Алгоритмы. Построение и анализ
+\item \url{https://www.pythoncentral.io/singly-linked-list-insert-node/} - Python Data Structures Tutorial
+\end{enumerate}
+\end{document}
+
