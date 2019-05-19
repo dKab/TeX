@@ -8,3 +8,7 @@
 *.bbl
 *.out
 *.blg
+__pycache__/
+*.pyg
+*.pyc
+.vscode/

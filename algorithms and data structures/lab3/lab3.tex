@@ -1,0 +1,255 @@
+\documentclass[12pt]{article}
+\usepackage[english, russian]{babel}
+%\usepackage{makecell}
+%\usepackage{multirow}
+%\usepackage{hhline}
+\usepackage{ulem}
+\usepackage{minted}
+\usepackage[TS1, T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+%\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+%\makeatother
+\usepackage[left=2cm,right=2cm, top=1cm,bottom=1.5cm,bindingoffset=0cm]{geometry}
+
+%\usepackage{multicol}
+%\usepackage{dirtree} 
+%\usepackage{graphicx}
+%\graphicspath{{imgs/}}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\begin{document}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\begin{center}
+\normalsize
+\textbf{Федеральное государственное автономное образовательное учреждение высшего образования}
+
+\small
+\medskip 
+\textbf{САНКТ-ПЕТЕРБУРГСКИЙ НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ  УНИВЕРСИТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ, МЕХАНИКИ И ОПТИКИ}
+
+\medskip 
+\textbf{ФАКУЛЬТЕТ ПРОГРАММНОЙ ИНЖЕНЕРИИ И КОМПЬЮТЕРНОЙ ТЕХНИКИ}
+\end{center}
+\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+\begin{center}
+\par\medskip\par\smallskip
+\Large
+ 
+\par\smallskip
+\textbf{ОТЧЕТ} 
+
+\textbf{ПО ЛАБОРАТОРНОЙ РАБОТЕ №3}
+
+\large
+\par\bigskip
+\textbf{«Алгоритмы и структуры данных: \\ Алгоритмы поиска.»}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\end{center}
+\begin{center}
+\begin{tabular}{lllll}
+Проверил:	 	 						& \hspace{80pt}	&	Выполнил:										&\\
+Сентерев Ю.А.	 \_\_\_\_\_\_\_\_\_\_	&			    &	Студент группы P3255							&\\
+«\_\_\_\_\_\_» 	 \_\_\_\_\_\_\_ 201\_г.  & 				&	Кабардинов Д. В. \_\_\_\_\_\_\_\_\_\_\_			&\\
+										&				&													&\\
+Оценка\hspace{12pt}\_\_\_\_\_\_\_\_\_	&				&													&\\
+\end{tabular}
+\par\bigskip\par\bigskip\par\bigskip
+                                                  
+\par\bigskip \par\bigskip
+\end{center}
+\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip\par\bigskip
+\begin{center}
+Санкт-Петербург
+\par\bigskip
+2019
+\end{center}
+\pagebreak
+\textbf{Задание} \\
+
+5. Вывести на экран все числа упорядоченного массива А кратные 4 (4,8,...) с помощью
+помощью линейного, бинарного и индексно-последовательного поиска. \\
+\par
+\textbf{ Цель работы:}
+\begin{list}{-}{}
+\item исследовать и изучить основные процедуры, используемые при работе с бинарными
+(двоичными) деревьями;
+\item овладеть умениями и навыками написания программ по исследованию бинарных деревьев
+на языке программирования Python.
+\end{list}
+
+
+\par
+\textbf{Ход выполнения работы}\\
+1. Последовательный поиск\\
+Реализация алгоритма последовательного поиска на языке Python:
+\begin{minted}{python}
+def linearSearch(numbers, search):
+	for number in numbers:
+		if number == search:
+			return number
+	return None
+\end{minted}
+
+Функция, использующая последовательный поиск и позволяющая найти все числа массива кратные 4:
+\begin{minted}{python}
+def findAllMatchesUsingLinearSearch(numbers, searches):
+	matches = []
+	for search in searches:
+		match = linearSearch(numbers, search)
+		if (match != None):
+			matches.append(match)
+	return matches
+\end{minted}
+
+Проверка результата:
+\begin{minted}{python}
+def testLinearSaerch(self):
+		sortedNumbers = [1, 3, 5, 9, 11, 16, 24, 28, 35, 40, 89, 100]
+		multiplesOfFour = [16, 24, 28, 40, 100]
+		linearSearchResultList = findAllMatchesUsingLinearSearch(sortedNumbers, multiplesOfFour)
+		print('The result of linear search:')
+		for num in linearSearchResultList:
+			print(num)
+		self.assertListEqual(linearSearchResultList, multiplesOfFour)
+\end{minted}
+Вывод команды
+\begin{minted}{bash}
+dmitrii@kdv:~/projects/TeX$ python3 algorithms\ and\ data\ structures/lab3/search.py 
+The result of linear search:
+16
+24
+28
+40
+100
+\end{minted}
+
+2. Бинарный поиск\\
+Реализация алгоритма бинарного поиска на языке Python:
+\begin{minted}{python}
+def binarySearch(numbers, search):
+	left = 0
+	right = len(numbers) - 1
+	while left < len(numbers) and right >= 0:
+		mid = (left + right)//2
+		middleNumber = numbers[mid]
+		if middleNumber < search:
+			left = mid + 1
+		elif middleNumber > search:
+			right = mid
+		else: # it's a match
+			return middleNumber
+	return None
+\end{minted}
+
+Функция, использующая бинарный поиск и позволяющая найти все числа массива кратные 4:
+\begin{minted}{python}
+def findAllMatchesUsingBinarySearch(numbers, searches):
+	matches = []
+	for search in searches:
+		match = binarySearch(numbers, search)
+		if (match != None):
+			matches.append(match)
+	return matches
+\end{minted}
+Проверка результата:
+\begin{minted}{python}
+def testBinarySearch(self):
+		sortedNumbers = [1, 3, 5, 9, 11, 16, 24, 28, 35, 40, 89, 100]
+		multiplesOfFour = [16, 24, 28, 40, 100]
+		binarySearchResultList = findAllMatchesUsingBinarySearch(sortedNumbers, multiplesOfFour)
+		print('The result of binary search:')
+		for num in binarySearchResultList:
+			print(num)
+		self.assertListEqual(binarySearchResultList, multiplesOfFour)
+\end{minted}
+
+Вывод команды
+\begin{minted}{bash}
+dmitrii@kdv:~/projects/TeX$ python3 algorithms\ and\ data\ structures/lab3/search.py 
+The result of binary search:
+16
+24
+28
+40
+100
+\end{minted}
+
+3. Индексно-последовательный поиск\\
+Реализация алгоритма индексно-последовательного поиска на языке Python:
+\begin{minted}{python}
+def linearIndexedSearch(numbers, index, search):
+	start = 0
+	end = len(numbers) - 1
+	for entry in index:
+		if entry['val'] < search:
+			start = entry['ind']
+		if entry['val'] > search:
+			end = entry['ind']
+			break
+		if entry['val'] == search:
+			return search
+	for i in range(start, end + 1):
+		if numbers[i] == search:
+			return search
+	return None
+\end{minted}
+
+Функция, использующая индексно-последовательный поиск и позволяющая найти все числа массива кратные 4:
+\begin{minted}{python}
+def findAllMatchesUsingLinearIndexedSearch(numbers, index, searches):
+	matches = []
+	for search in searches:
+		match = linearIndexedSearch(numbers, index, search)
+		if (match != None):
+			matches.append(match)
+	return matches
+\end{minted}
+Проверка результата:
+\begin{minted}{python}
+def testLinearIndexedSearch(self):
+		index = [
+			{'val': 1, 	'ind': 0}, 
+			{'val': 11, 'ind': 4}, 
+			{'val': 35, 'ind': 8}
+		]
+		sortedNumbers = [1, 3, 5, 9, 11, 16, 24, 28, 35, 40, 89, 100]
+		multiplesOfFour = [16, 24, 28, 40, 100]
+		linearIndexedSearchResult = findAllMatchesUsingLinearIndexedSearch(
+		sortedNumbers, index, multiplesOfFour)
+		print('The result of linear indexed search:')
+		for num in linearIndexedSearchResult:
+			print(num)
+		self.assertListEqual(linearIndexedSearchResult, multiplesOfFour)
+\end{minted}
+
+Вывод команды
+\begin{minted}{bash}
+dmitrii@kdv:~/projects/TeX$ python3 algorithms\ and\ data\ structures/lab3/search.py 
+The result of binary search:
+16
+24
+28
+40
+100
+\end{minted}
+\textbf{Выводы}\\
+Мне удалось выполнить поставленную задачу двумя 3 способами: \\
+1. Последовательный поиск \\
+2. Бинарный поиск \\
+3. Индексно-последовательный поиск \\
+Таким образом, цель работы достигнута.
+\par\bigskip
+\textbf{Список используемой литературы}:
+\begin{enumerate}
+\item \url{https://docs.python.org/3/tutorial/introduction.html#lists} \\ - Lists
+\item \url{https://docs.python.org/3.5/tutorial/index.html} - The Python Tutorial
+\item Стивен Скиена - Алгоритмы. Руководство по разработке
+\item Никлаус Вирт - Алгоритмы и структуры данных
+\item Томас Кормен - Алгоритмы. Построение и анализ
+\item \url{https://www.pythoncentral.io/singly-linked-list-insert-node/} - Python Data Structures Tutorial
+\end{enumerate}
+\end{document}
+
