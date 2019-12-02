@@ -23,7 +23,6 @@ class TestSecant(unittest.TestCase):
 		def f(x: float) -> float:
 			return x**2 - 20 * sin(x)
 
-
 		x0, x_star = 2, 2.7529466338187049383
 
 		self.assertAlmostEqual(secant(f, x0), x_star)
