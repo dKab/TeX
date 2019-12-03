@@ -3,37 +3,40 @@ import unittest
 from fractions import Fraction
 
 def simpleIteration(A, eps = 1e-4, maxIterations = 1e4):
-    n = len(A)
-    beta = [0 for i in range(n)]
-    alpha = [[0 for i in range(n)] for i in range(n)]
-    roots = [0 for i in range(n)]
-    for i in range(n):
-        beta[i] = A[i][n] / A[i][i]
-        for j in range(n):
-            alpha[i][j] = - A[i][j] / A[i][i] if (i != j) else 0
-    
-    # the first approximation - assign roots to be beta
-    for i in range(n):
-        roots[i] = beta[i]
+	n = len(A)
+	beta = [0 for i in range(n)]
+	alpha = [[0 for i in range(n)] for i in range(n)]
+	roots = [0 for i in range(n)]
+	for i in range(n):
+		beta[i] = A[i][n] / A[i][i]
+		for j in range(n):
+			alpha[i][j] = - A[i][j] / A[i][i] if (i != j) else 0
+	
+	# the first approximation - assign roots to be beta
+	for i in range(n):
+		roots[i] = beta[i]
 
-    nextRoots = [0 for i in range(n)]
-    deltas = [0 for i in range(n)]
-    precisionReached = False
-    iterationsCount = 0
+	nextRoots = [0 for i in range(n)]
+	deltas = [0 for i in range(n)]
+	precisionReached = False
+	iterationsCount = 0
 
-    while not precisionReached and iterationsCount < maxIterations:
-        for i in range(n):
-            sum = 0
-            for j in range(n):
-                sum += alpha[i][j] * roots[j]
-            nextRoots[i] = beta[i] + sum
-            deltas[i] = abs(nextRoots[i] - roots[i])
-            roots[i] = nextRoots[i]
-        if (max(deltas) < eps):
-            precisionReached = True
-        iterationsCount += 1
-
-    return roots
+	while not precisionReached and iterationsCount < maxIterations:
+		for i in range(n):
+			sum = 0
+			for j in range(n):
+				sum += alpha[i][j] * roots[j]
+			nextRoots[i] = beta[i] + sum
+			deltas[i] = abs(nextRoots[i] - roots[i])
+			roots[i] = nextRoots[i]
+		if (max(deltas) < eps):
+			precisionReached = True
+		iterationsCount += 1
+	if precisionReached:
+		print("Finished in {0} iterations".format(iterationsCount))
+	else:
+		print("Iterations limit rechead")
+	return roots
 
 class TestSimpleIteration(unittest.TestCase):
 	def test_0(self):
